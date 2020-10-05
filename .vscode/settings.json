@@ -1,0 +1,14 @@
+{
+    "python.pythonPath": "/home/subbotin/django_project/venv/bin/python",
+    "python.formatting.blackArgs": [
+        "-l 120"
+    ],
+    "python.formatting.provider": "black",
+    "python.linting.pylintArgs": [
+        "--load-plugins",
+        "pylint_django"
+    ],
+    "python.linting.pylintEnabled": true,
+    "python.linting.enabled": false,
+    "editor.fontSize": 16
+}
