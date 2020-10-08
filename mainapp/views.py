@@ -12,7 +12,7 @@ def main(request):
     return render(request, "mainapp/index.html", content)
 
 
-def products(request):
+def products(request, pk=None):
     title = 'продукты'
     links_menu = ProductCategory.objects.all()
     similar_products = Product.objects.all()
@@ -22,6 +22,8 @@ def products(request):
         'similar_products': similar_products,
         'media_url': settings.MEDIA_URL,
         }
+    if pk:
+        print(f'Юзер выбрал категорию {pk}')
     return render(request, "mainapp/products.html", content)
 
 
