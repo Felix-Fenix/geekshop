@@ -257,7 +257,7 @@ html, body {
 
 .tab-content {
 	margin-top: 50px;
-	display: flex;
+	/* display: flex; */
 	justify-content: space-between;
 	margin-bottom: 120px;
 }
@@ -265,6 +265,7 @@ html, body {
 	height: 270px;
 	width: 270px;
 	position: relative;
+	display: inline-block;
 }
 .tab-content a .text {
 	display: none;

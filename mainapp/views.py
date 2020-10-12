@@ -2,7 +2,7 @@ from django.conf import settings
 from django.utils import timezone
 from django.shortcuts import render
 
-from .models import Product, ProductCategory
+from .models import Product, ProductCategory, Contact
 
 def main(request):
     title = 'главная'
@@ -30,11 +30,6 @@ def products(request, pk=None):
 def contact(request):
     title = 'контакты'
     visit_date = timezone.now()
-    locations = [
-        {'city': 'Москва', 'phone': '+7-888-888-8888', 'email': 'info@geekshop.ru', 'address': 'В пределах МКАД'},
-        {'city': 'Ростов-на-Дону', 'phone': '+7-999-999-9999', 'email': 'valera@mail.ru', 'address': 'За городом'},
-        {'city': 'Челябинск', 'phone': '+7-777-777-7777', 'email': 'atom@rambler.ru', 'address': 'В городе'},
-        
-    ]
+    locations = Contact.objects.all()
     content = {'title': title, 'visit_date': visit_date, 'locations': locations}
     return render(request, "mainapp/contact.html", content)
