@@ -34,6 +34,6 @@
 <a href="#" class="search"></a>
 <a href="{% url 'basket:view' %}" class="basket">
     <span>
-        {% if total_price %} {{ total_price }} {% endif %}
+        {% if total.total_price != 0 %}{{total.total_quantity}} {{ total.total_price}}{% endif %}
     </span>
 </a>
