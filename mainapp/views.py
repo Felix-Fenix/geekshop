@@ -1,5 +1,7 @@
 import random
 
+from django.http import request
+
 from basketapp.models import Basket
 from django.conf import settings
 from django.shortcuts import get_object_or_404, render
@@ -72,3 +74,18 @@ def contact(request):
     locations = Contact.objects.all()
     content = {"title": title, "visit_date": visit_date, "locations": locations}
     return render(request, "mainapp/contact.html", content)
+
+
+def product(request, pk):
+    product = get_object_or_404(Product, pk=pk)
+    title = product.name
+    basket = get_basket(request.user)
+    links_menu = ProductCategory.objects.all()
+    content = {
+        "title": title,
+        "product": product,
+        "links_menu": links_menu,
+        "basket": basket,
+        "media_url": settings.MEDIA_URL,
+    }
+    return render(request, "mainapp/product.html", content)
