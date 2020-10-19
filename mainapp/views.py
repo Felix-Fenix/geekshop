@@ -1,9 +1,9 @@
 import random
 
-from django.http import request
-
 from basketapp.models import Basket
 from django.conf import settings
+from django.contrib.auth.decorators import login_required
+from django.http import request
 from django.shortcuts import get_object_or_404, render
 from django.utils import timezone
 
@@ -76,6 +76,7 @@ def contact(request):
     return render(request, "mainapp/contact.html", content)
 
 
+@login_required
 def product(request, pk):
     product = get_object_or_404(Product, pk=pk)
     title = product.name
