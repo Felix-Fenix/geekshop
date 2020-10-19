@@ -18,15 +18,10 @@ def products(request, pk=None):
     title = "продукты"
     links_menu = ProductCategory.objects.all()
 
-    total = {
-        'total_price': 0,
-        'total_quantity': 0,
-    }
+    basket = []
     if request.user.is_authenticated:
         basket = Basket.objects.filter(user=request.user)
-        for el in basket:
-            total['total_price'] += el.product.price * el.quantity
-            total['total_quantity'] += el.quantity
+        
     if pk is not None:
         if pk == 0:
             products = Product.objects.all().order_by("price")
@@ -40,7 +35,7 @@ def products(request, pk=None):
             "category": category,
             "products": products,
             "media_url": settings.MEDIA_URL,
-            "total": total,
+            "basket": basket,
         }
         return render(request, "mainapp/products_list.html", content)
     similar_products = Product.objects.all()
@@ -49,7 +44,7 @@ def products(request, pk=None):
         "links_menu": links_menu,
         "similar_products": similar_products,
         "media_url": settings.MEDIA_URL,
-        "total": total,
+        "basket": basket,
     }
     return render(request, "mainapp/products.html", content)
 
