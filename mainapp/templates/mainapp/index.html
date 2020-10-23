@@ -24,14 +24,14 @@
 	<div class="featured-menu">
 		<a class="active" href="#">Популярные</a><a href="#">Новинки</a>
 	</div>
-	<a class="explore" href="#">показать все <img src="{% static 'img/arrow.png' %}" alt=""></a>
+	<a class="explore" href="{% url 'products:category' pk=0 %}">показать все <img src="{% static 'img/arrow.png' %}" alt=""></a>
 	<div class="clearfix">
 	</div>
 	<div class="tab-content">
 		
 		{% for product in products %}
 		<div class="block">
-			<a href="{{ product.image }}"><img src="{{ media_url }}{{ product.image }}" alt="{{ product.short_desc }}" width="270" height="270">
+			<a href="{% url 'products:product' product.pk %}"><img src="{{ media_url }}{{ product.image }}" alt="{{ product.short_desc }}" width="270" height="270">
 				<div class="text">
 					<img src="{% static 'img/icon-hover.png' %}" alt=">">
 					<h4>{{ product.name }}</h4>
