@@ -3,6 +3,7 @@ from authnapp.models import ShopUser
 from django.conf import settings
 from django.contrib.auth.decorators import user_passes_test
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.shortcuts import (HttpResponseRedirect, get_object_or_404,
                               redirect, render)
 from django.urls import reverse, reverse_lazy
@@ -80,10 +81,18 @@ def user_delete(request, pk):
 
 
 @user_passes_test(lambda u: u.is_superuser)
-def categories(request):
+def categories(request, page=1):
     title = "админка/категории"
     categories_list = ProductCategory.objects.all()
-    content = {"title": title, "objects": categories_list, "media_url": settings.MEDIA_URL}
+    paginator = Paginator(categories_list, 4)
+    try:
+        categories_paginator = paginator.page(page)
+    except PageNotAnInteger:
+        categories_paginator = paginator.page(1)
+    except EmptyPage:
+        categories_paginator = paginator.page(paginator.num_pages)
+
+    content = {"title": title, "objects": categories_paginator, "media_url": settings.MEDIA_URL}
     return render(request, "adminapp/categories.html", content)
 
 
@@ -119,11 +128,18 @@ class ProductCategoryDeleteView(LoginRequiredMixin, DeleteView):
 
 
 @user_passes_test(lambda u: u.is_superuser)
-def products(request, pk):
+def products(request, pk, page=1):
     title = "админка/продукт"
     category = get_object_or_404(ProductCategory, pk=pk)
-    products_list = Product.objects.filter(category__pk=pk).order_by("name")
-    content = {"title": title, "category": category, "objects": products_list, "media_url": settings.MEDIA_URL}
+    products = Product.objects.filter(category__pk=pk).order_by("name")
+    paginator = Paginator(products, 5)
+    try:
+        products_paginator = paginator.page(page)
+    except PageNotAnInteger:
+        products_paginator = paginator.page(1)
+    except EmptyPage:
+        products_paginator = paginator.page(paginator.num_pages)
+    content = {"title": title, "category": category, "objects": products_paginator, "media_url": settings.MEDIA_URL}
     return render(request, "adminapp/products.html", content)
 
 

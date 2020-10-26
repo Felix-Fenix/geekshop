@@ -6,7 +6,19 @@
     <button class="new_category">
         <a href={% url 'admin:category_create' %}>новая категория</a>
     </button>
-
+    <div class="paginator">
+        {% if objects.has_previous %}
+        <a href="{% url 'admin:page_category' objects.previous_page_number %}"><i
+                class="fas fa-chevron-circle-left"></i></a>
+        {% endif %}
+        <span class="current">
+            страница {{ objects.number }} из {{ objects.paginator.num_pages }}
+        </span>
+        {% if objects.has_next %}
+        <a href="{% url 'admin:page_category' objects.next_page_number %}"><i
+                class="fas fa-chevron-circle-right"></i></a>
+        {% endif %}
+    </div>
     {% for object in objects %}
     <div class="category_record {% if not object.is_active %}not_active{% endif %}">
         <div class="category_name">
