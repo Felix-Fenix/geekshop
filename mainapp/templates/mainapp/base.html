@@ -14,7 +14,12 @@
     {% block css %}
     <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
     <link rel="stylesheet" href="{% static 'fonts/font-awesome/css/font-awesome.css' %}">
+    <link rel="stylesheet" href="{% static 'css/fa.all.min.css' %}">
     {% endblock css %}
+    
+    {% block js %}
+    {% endblock js %}
+        
 </head>
 
 <body>
@@ -49,7 +54,7 @@
                 </form>
             </div>
         </div>
-        <p class="small">&copy; GB 2020</p>
+        <p class="small">&copy; GB {% now "Y" %}</p>
         
         
         <div class="social">
@@ -65,5 +70,3 @@
 </body>
 
 </html>
-
-        
