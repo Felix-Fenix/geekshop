@@ -1,5 +1,5 @@
 {
-    "python.pythonPath": "/home/subbotin/django_project/venv/bin/python",
+    "python.pythonPath": "/home/subbotin/.pyenv/versions/3.8.6/envs/geekshop/bin/python",
     "python.formatting.provider": "black",
     "python.formatting.blackArgs": [
         "-l 120"
