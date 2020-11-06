@@ -17,10 +17,21 @@
         зарегистрироваться
     </a>
 </button>
-<button class="btn btn-round form-control">
-    <a href="{% url 'social:begin' 'vk-oauth2' %}?next=/">
-        Вход через <i class="fa fa-vk" aria-hidden="true"></i>
-    </a>
-</button>
+<p class="text-center">Войти через социальные сети</p>
+<p>
+    <div class="btn-group col-12" role="group" aria-label="Basic example">
+        <a href="{% url 'social:begin' 'vk-oauth2' %}?next=/" class="btn btn-outline-primary col-6">
+            <i class="fa fa-vk" aria-hidden="true"></i>
+        </a>
+        <a href="{% url 'social:begin' 'github' %}?next=/" class="btn btn-outline-primary col-6">
+            <i class="fa fa-github" aria-hidden="true"></i>
+        </a>
+        <!-- Use it after adding the https Protocol -->
+        <!-- <a href="{% url 'social:begin' 'facebook' %}?next=/" class="btn btn-outline-primary col-6">
+            <i class="fa fa-facebook" aria-hidden="true"></i>
+        </a> -->
+    </div>
+</p>
+
 
 {% endblock content %}

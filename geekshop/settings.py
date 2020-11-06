@@ -171,22 +171,41 @@ EMAIL_FILE_PATH = "tmp/email-messages/"
 AUTHENTICATION_BACKENDS = (
     "django.contrib.auth.backends.ModelBackend",
     "social_core.backends.vk.VKOAuth2",
+    "social_core.backends.github.GithubOAuth2",
 )
 
 SOCIAL_AUTH_URL_NAMESPACE = "social"
 
+# Load settings from file for VK
 with open(".secrets/vk.json", "r") as f:
     VK = json.load(f)
 
 SOCIAL_AUTH_VK_OAUTH2_KEY = VK["SOCIAL_AUTH_VK_OAUTH2_APPID"]
 SOCIAL_AUTH_VK_OAUTH2_SECRET = VK["SOCIAL_AUTH_VK_OAUTH2_KEY"]
 
-LOGIN_ERROR_URL = "/"
-
 SOCIAL_AUTH_VK_OAUTH2_IGNORE_DEFAULT_SCOPE = True
 # Full list of scope here:
 #     https://vk.com/dev/permissions
 SOCIAL_AUTH_VK_OAUTH2_SCOPE = ["email"]
+
+# Load settings from file for GitHub
+with open(".secrets/github.json", "r") as f:
+    github_secrets = json.load(f)
+    
+SOCIAL_AUTH_GITHUB_KEY = github_secrets["SOCIAL_AUTH_GITHUB_KEY"]
+SOCIAL_AUTH_GITHUB_SECRET = github_secrets["SOCIAL_AUTH_GITHUB_SECRET"]
+
+LOGIN_ERROR_URL = "/"
+
+# Use it after adding the https Protocol
+# SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
+
+# # Load settings from file for Facebook
+# with open(".secrets/facebook.json", "r") as f:
+#     facebook_secrets = json.load(f)
+
+# SOCIAL_AUTH_FACEBOOK_KEY = facebook_secrets["SOCIAL_AUTH_FACEBOOK_KEY"]
+# SOCIAL_AUTH_FACEBOOK_SECRET = facebook_secrets["SOCIAL_AUTH_FACEBOOK_SECRET"]
 
 SOCIAL_AUTH_PIPELINE = (
     "social_core.pipeline.social_auth.social_details",
