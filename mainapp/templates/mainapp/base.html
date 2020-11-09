@@ -10,32 +10,34 @@
         {{ title|capfirst }}
         {% endblock title %}
     </title>
-
+    <link rel="shortcut icon" type="image/png" href="{% static 'img/favicon.ico' %}">
     {% block css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
     <link rel="stylesheet" href="{% static 'fonts/font-awesome/css/font-awesome.css' %}">
     <link rel="stylesheet" href="{% static 'css/fa.all.min.css' %}">
     {% endblock css %}
-    
     {% block js %}
+    <script src="{% static 'js/jquery-3.5.1.min.js' %}"></script>
+    <script src="{% static 'js/popper.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
     {% endblock js %}
-        
+
 </head>
 
 <body>
     <div class="container">
-        
+
         {% block menu %}
         {% endblock menu %}
-            
+
         <div class="content">
-            {% block content %}    
+            {% block content %}
             {% endblock content %}
         </div>
 
     </div>
-    
-    
+
     {% block footer %}
     <div class="footer">
         <div class="clearfix">
@@ -55,8 +57,6 @@
             </div>
         </div>
         <p class="small">&copy; GB {% now "Y" %}</p>
-        
-        
         <div class="social">
             <a href="#" class="social1"></a>
             <a href="#" class="social2"></a>
