@@ -56,12 +56,12 @@ class Order(models.Model):
         self.save()
 
 
-# class OrderItemQuerySet(models.QuerySet):
-#     def delete(self, *args, **kwargs):
-#         for object in self:
-#             object.product.quantity += object.quantity
-#             object.product.save()
-#         super(OrderItemQuerySet, self).delete(*args, **kwargs)
+class OrderItemQuerySet(models.QuerySet):
+    def delete(self, *args, **kwargs):
+        for object in self:
+            object.product.quantity += object.quantity
+            object.product.save()
+        super(OrderItemQuerySet, self).delete(*args, **kwargs)
 
 
 class OrderItem(models.Model):
@@ -69,7 +69,7 @@ class OrderItem(models.Model):
     product = models.ForeignKey(Product, verbose_name="продукт", on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(verbose_name="количество", default=0)
 
-    # objects = OrderItemQuerySet.as_manager()
+    objects = OrderItemQuerySet.as_manager()
 
     def get_product_cost(self):
         return self.product.price * self.quantity
@@ -78,15 +78,21 @@ class OrderItem(models.Model):
     def get_item(pk):
         return get_object_or_404(OrderItem, pk=pk)
 
-    # def save(self, *args, **kwargs):
-    #     if self.pk:
-    #         self.product.quantity -= self.quantity - self.__class__.get_item(self.pk).quantity
-    #     else:
-    #         self.product.quantity -= self.quantity
-    #     self.product.save()
-    #     super(self.__class__, self).save(*args, **kwargs)
+    def save(self, *args, **kwargs):
+        try:
+            if self.pk:
+                self.product.quantity -= self.quantity - self.__class__.get_item(self.pk).quantity
+            else:
+                self.product.quantity -= self.quantity
+            if self.product.quantity < 0:
+                raise Exception('Количество превышает остаток на складе')
+        except Exception as exp:
+            print(exp)
+        else:
+            self.product.save()
+            super(self.__class__, self).save(*args, **kwargs)
 
-    # def delete(self):
-    #     self.product.quantity += self.quantity
-    #     self.product.save()
-    #     super(self.__class__, self).delete()
+    def delete(self):
+        self.product.quantity += self.quantity
+        self.product.save()
+        super(self.__class__, self).delete()

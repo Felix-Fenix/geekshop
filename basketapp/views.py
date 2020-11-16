@@ -28,8 +28,11 @@ def basket_add(request, pk):
     if not basket:
         basket = Basket(user=request.user, product=product)
 
-    basket.quantity += 1
-    basket.save()
+    if product.quantity != 0:
+        basket.quantity += 1
+        basket.save()
+    else:
+        print('Превышено количество на складе')
 
     return HttpResponseRedirect(request.META.get("HTTP_REFERER"))
 
@@ -51,11 +54,15 @@ def basket_edit(request, pk, quantity):
             print(f"Wrong input numbers! {exp}")
             raise exp
         new_basket_item = Basket.objects.get(pk=pk)
+        product = get_object_or_404(Product, pk=new_basket_item.product_id)
 
-        if quantity > 0:
+        # Проверяем что товар еще есть на складе, или что уменьшаем количество.
+        if product.quantity > 0 or new_basket_item.quantity > quantity:
             new_basket_item.quantity = quantity
             new_basket_item.save()
         else:
+            print('превышено количество на складе')
+        if quantity == 0:
             new_basket_item.delete()
 
         basket_items = Basket.objects.filter(user=request.user).order_by("product__category")
