@@ -1,11 +1,12 @@
 import random
 
 from django.conf import settings
-from django.core.cache import cache
 from django.contrib.auth.decorators import login_required
+from django.core.cache import cache
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.shortcuts import get_object_or_404, render
 from django.utils import timezone
+from django.views.decorators.cache import cache_page
 
 from .models import Contact, Product, ProductCategory
 
@@ -151,7 +152,7 @@ def products(request, pk=None, page=1):
     }
     return render(request, "mainapp/products.html", content)
 
-
+@cache_page(600)
 def contact(request):
     title = "контакты"
     visit_date = timezone.now()
