@@ -38,9 +38,9 @@ class Basket(models.Model):
         _totalcost = sum(list(map(lambda x: x.product_cost, _items)))
         return _totalcost
 
-    # @staticmethod
-    # def get_items(user):
-    #     return Basket.objects.filter(user=user).order_by("product__category")
+    @staticmethod
+    def get_items(user):
+        return Basket.objects.filter(user=user).order_by("product__category")
 
     @cached_property
     def get_items_cached(self):
