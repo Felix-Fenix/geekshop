@@ -43,11 +43,12 @@ INSTALLED_APPS = [
     "adminapp",
     "social_django",
     "ordersapp",
-    "debug_toolbar",
     "template_profiler_panel",
     "django_extensions",
 ]
 
+if DEBUG:
+    INSTALLED_APPS.append("debug_toolbar")
 # Auth model
 AUTH_USER_MODEL = "authnapp.ShopUser"
 
@@ -60,8 +61,10 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "social_django.middleware.SocialAuthExceptionMiddleware",
-    "debug_toolbar.middleware.DebugToolbarMiddleware",
 ]
+
+if DEBUG:
+    MIDDLEWARE.append("debug_toolbar.middleware.DebugToolbarMiddleware")
 
 ROOT_URLCONF = "geekshop.urls"
 
