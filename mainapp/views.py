@@ -163,7 +163,7 @@ def contact(request):
 
 @login_required
 def product(request, pk):
-    title = product.name
+    title = get_product(pk).name
     content = {
         "title": title,
         "product": get_product(pk),
