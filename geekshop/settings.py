@@ -43,11 +43,12 @@ INSTALLED_APPS = [
     "adminapp",
     "social_django",
     "ordersapp",
-    "debug_toolbar",
     "template_profiler_panel",
     "django_extensions",
 ]
 
+if DEBUG:
+    INSTALLED_APPS.append("debug_toolbar")
 # Auth model
 AUTH_USER_MODEL = "authnapp.ShopUser"
 
@@ -60,8 +61,25 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "social_django.middleware.SocialAuthExceptionMiddleware",
-    "debug_toolbar.middleware.DebugToolbarMiddleware",
 ]
+
+if DEBUG:
+    MIDDLEWARE.append("debug_toolbar.middleware.DebugToolbarMiddleware")
+
+CACHE_MIDDLEWARE_ALIAS = "default"
+CACHE_MIDDLEWARE_SECONDS = 120
+CACHE_MIDDLEWARE_KEY_PREFIX = "geekbrains"
+
+# Be carefull if you have Windows! Install Memcached before run project!
+#     https://www.ubergizmo.com/how-to/install-memcached-windows/
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.memcached.MemcachedCache",
+        "LOCATION": "127.0.0.1:11211",
+    }
+}
+
+LOW_CACHE = True
 
 ROOT_URLCONF = "geekshop.urls"
 

@@ -28,7 +28,6 @@
 	<div class="clearfix">
 	</div>
 	<div class="tab-content">
-		
 		{% for product in products %}
 		<div class="block">
 			<a href="{% url 'products:product' product.pk %}"><img src="{{ media_url }}{{ product.image }}" alt="{{ product.short_desc }}" width="270" height="270">
@@ -40,11 +39,27 @@
 			</a>
 		</div>
 		{% endfor %}
-			
 
-		
+
+
 	</div>
 </div>
 
 <div class="clr"></div>
+
+<div style="display: none;">
+    <ul>
+        {% comment %}
+        <li>{{ fact.get_factorial }}</li>
+        <li>{{ fact.get_factorial }}</li>
+        <li>{{ fact.get_factorial }}</li>
+		
+        {% with temp_fact=fact.get_factorial %}
+        <li>{{ temp_fact }}</li>
+        <li>{{ temp_fact }}</li>
+        <li>{{ temp_fact }}</li>
+        {% endwith %}
+        {% endcomment %}
+    </ul>
+</div>
 {% endblock content %}
